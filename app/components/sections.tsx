@@ -48,16 +48,9 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition duration-300 ${
-        isScrolled
-          ? "border-[color:var(--border)] backdrop-blur"
-          : "border-transparent"
-      }`}
-      style={{
-        backgroundColor: isScrolled
-          ? "color-mix(in srgb, var(--bg) 85%, transparent)"
-          : "var(--bg)",
-      }}
+      className={`sticky top-0 z-50 border-b border-[color:var(--border)] transition duration-300 ${
+        isScrolled ? "bg-white/70 shadow-[0_12px_30px_-25px_rgba(15,23,42,0.35)]" : "bg-white/70"
+      } backdrop-blur-xl`}
     >
       <div
         className={`${containerClass} flex h-16 items-center justify-between gap-6`}
@@ -83,7 +76,7 @@ export function Header() {
         </nav>
         <a
           href="#contacts"
-          className="rounded-full border border-[color:var(--border)] px-4 py-2 text-sm font-semibold text-[color:var(--text)] transition hover:-translate-y-0.5 hover:border-[color:var(--text)]"
+          className="rounded-full border border-[color:var(--border)] bg-white/70 px-4 py-2 text-sm font-semibold text-[color:var(--text)] transition hover:-translate-y-0.5 hover:border-[color:var(--text)]"
         >
           Обсудить проект
         </a>
@@ -94,21 +87,7 @@ export function Header() {
 
 export function Hero() {
   return (
-    <section
-      id="top"
-      className="relative overflow-hidden border-b border-[color:var(--border)] pb-20 pt-16"
-    >
-      <div className="absolute inset-0 -z-10">
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(15,23,42,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.5) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-          }}
-        />
-        <div className="absolute -top-40 right-0 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(47,107,255,0.12)_0%,rgba(47,107,255,0)_65%)] blur-3xl" />
-      </div>
+    <section id="top" className="section-shell relative overflow-hidden pt-20 pb-16">
       <motion.div
         className={`${containerClass} grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center`}
         variants={staggerContainer}
@@ -118,7 +97,7 @@ export function Hero() {
       >
         <motion.div className="lg:col-span-7" variants={staggerContainer}>
           <motion.h1
-            className="text-4xl font-semibold leading-tight text-[color:var(--text)] sm:text-5xl"
+            className="text-4xl font-semibold leading-[1.05] tracking-tight text-[color:var(--text)] sm:text-6xl"
             variants={fadeUp}
           >
             Разработка сайтов
@@ -126,7 +105,7 @@ export function Hero() {
             для бизнеса и продуктов
           </motion.h1>
           <motion.p
-            className="mt-5 max-w-xl text-base leading-relaxed text-[color:var(--muted)]"
+            className="mt-6 max-w-xl text-lg leading-relaxed text-[color:var(--muted)]"
             variants={fadeUp}
           >
             Проектируем, дизайн-им и разрабатываем современные веб-решения. Фокус
@@ -138,13 +117,13 @@ export function Hero() {
           >
             <a
               href="#contacts"
-              className="rounded-full bg-[color:var(--accent)] px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+              className="rounded-full bg-[color:var(--accent)] px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_-18px_rgba(47,107,255,0.8)] transition hover:-translate-y-0.5"
             >
               Обсудить проект
             </a>
             <a
               href="#cases"
-              className="rounded-full border border-[color:var(--border)] px-6 py-3 text-sm font-semibold text-[color:var(--text)] transition hover:-translate-y-0.5 hover:border-[color:var(--text)]"
+              className="rounded-full border border-[color:var(--border)] bg-white/70 px-6 py-3 text-sm font-semibold text-[color:var(--text)] transition hover:-translate-y-0.5 hover:border-[color:var(--text)]"
             >
               Смотреть кейсы
             </a>
@@ -170,7 +149,7 @@ export function Hero() {
           </motion.div>
         </motion.div>
         <motion.div className="lg:col-span-5" variants={fadeUp}>
-          <div className="rounded-[24px] border border-[color:var(--border)] bg-[color:var(--bg)] p-6 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.4)] backdrop-blur">
+          <div className="rounded-3xl border border-[color:var(--border)] bg-white/70 p-6 shadow-[0_30px_80px_-50px_rgba(15,23,42,0.35)] backdrop-blur">
             <div className="flex items-center justify-between text-xs font-semibold text-[color:var(--muted)]">
               <span>Product panel</span>
               <span className="rounded-full bg-[color:var(--accent)]/10 px-2 py-1 text-[10px] text-[color:var(--accent)]">
@@ -186,7 +165,7 @@ export function Hero() {
                 ].map((card) => (
                   <div
                     key={card.title}
-                    className="rounded-2xl border border-[color:var(--border)] bg-[color:var(--bg)] p-3 text-sm transition hover:-translate-y-0.5 hover:border-[color:var(--text)]"
+                    className="rounded-3xl border border-[color:var(--border)] bg-white/70 p-3 text-sm shadow-[0_12px_30px_-22px_rgba(15,23,42,0.25)] transition hover:-translate-y-0.5 hover:border-[color:var(--text)]"
                   >
                     <p className="text-xs text-[color:var(--muted)]">
                       {card.title}
@@ -200,7 +179,7 @@ export function Hero() {
                   </div>
                 ))}
               </div>
-              <div className="rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-4">
+              <div className="rounded-3xl border border-[color:var(--border)] bg-white/70 p-4 shadow-[0_16px_40px_-30px_rgba(15,23,42,0.25)] backdrop-blur">
                 <p className="text-xs font-semibold text-[color:var(--muted)]">
                   План производства
                 </p>
@@ -239,7 +218,7 @@ export function StatsStrip() {
 
   return (
     <motion.section
-      className="border-b border-[color:var(--border)] py-10"
+      className="section-shell py-16"
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
@@ -283,7 +262,7 @@ export function Services() {
   return (
     <motion.section
       id="services"
-      className="py-20"
+      className="section-shell py-20"
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
@@ -306,7 +285,7 @@ export function Services() {
           {services.map((service) => (
             <motion.div
               key={service.title}
-              className="group cursor-pointer rounded-2xl border border-[color:var(--border)] bg-[color:var(--bg)] p-6 transition hover:-translate-y-0.5 hover:border-[color:var(--text)]"
+              className="group cursor-pointer rounded-3xl border border-[color:var(--border)] bg-white/70 p-6 shadow-[0_20px_50px_-35px_rgba(15,23,42,0.25)] backdrop-blur transition hover:-translate-y-1 hover:border-[color:var(--text)]"
               variants={staggerItem}
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] text-[color:var(--accent)]">
@@ -351,7 +330,7 @@ export function Cases() {
   return (
     <motion.section
       id="cases"
-      className="border-b border-[color:var(--border)] py-20"
+      className="section-shell py-20"
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
@@ -374,7 +353,7 @@ export function Cases() {
           {cases.map((item) => (
             <motion.div
               key={item.title}
-              className="group cursor-pointer overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--bg)] transition hover:-translate-y-0.5 hover:border-[color:var(--text)]"
+              className="group cursor-pointer overflow-hidden rounded-3xl border border-[color:var(--border)] bg-white/70 shadow-[0_20px_50px_-35px_rgba(15,23,42,0.25)] backdrop-blur transition hover:-translate-y-1 hover:border-[color:var(--text)]"
               variants={staggerItem}
             >
               <div className="relative h-44 overflow-hidden bg-[linear-gradient(135deg,#e2e8f0,#f8fafc)]">
@@ -382,7 +361,7 @@ export function Cases() {
                   Case preview
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center bg-[color:var(--accent)]/10 opacity-0 transition duration-300 group-hover:opacity-100">
-                  <span className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-[color:var(--accent)] shadow-sm">
+                  <span className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-[color:var(--accent)] shadow-[0_10px_24px_-16px_rgba(47,107,255,0.6)]">
                     Смотреть кейс
                   </span>
                 </div>
@@ -429,7 +408,7 @@ export function Process() {
   return (
     <motion.section
       id="process"
-      className="py-20"
+      className="section-shell py-20"
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
@@ -452,7 +431,7 @@ export function Process() {
           {steps.map((step, index) => (
             <motion.div
               key={step.title}
-              className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[color:var(--border)] bg-[color:var(--bg)] p-5"
+              className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-[color:var(--border)] bg-white/70 p-5 shadow-[0_20px_50px_-35px_rgba(15,23,42,0.25)] backdrop-blur"
               variants={staggerItem}
             >
               <div className="flex items-center gap-4">
@@ -485,7 +464,7 @@ export function TechApproach() {
   return (
     <motion.section
       id="about"
-      className="border-b border-[color:var(--border)] py-20"
+      className="section-shell py-20"
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
@@ -509,7 +488,7 @@ export function TechApproach() {
             {deliverables.map((item) => (
               <li
                 key={item}
-                className="flex items-center gap-3 rounded-xl border border-[color:var(--border)] bg-[color:var(--bg)] px-4 py-3"
+                className="flex items-center gap-3 rounded-3xl border border-[color:var(--border)] bg-white/70 px-4 py-3 shadow-[0_16px_40px_-30px_rgba(15,23,42,0.2)] backdrop-blur"
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]" />
                 {item}
@@ -562,7 +541,7 @@ export function FAQ() {
 
   return (
     <motion.section
-      className="py-20"
+      className="section-shell py-20"
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
@@ -581,7 +560,7 @@ export function FAQ() {
             return (
               <motion.div
                 key={faq.question}
-                className="rounded-2xl border border-[color:var(--border)] bg-[color:var(--bg)]"
+                className="rounded-3xl border border-[color:var(--border)] bg-white/70 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.2)] backdrop-blur"
                 variants={staggerItem}
               >
                 <button
@@ -629,7 +608,7 @@ export function FinalCTA() {
   return (
     <motion.section
       id="contacts"
-      className="border-t border-[color:var(--border)] py-20"
+      className="section-shell py-20"
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
@@ -637,7 +616,7 @@ export function FinalCTA() {
     >
       <div className={containerClass}>
         <motion.div
-          className="rounded-[28px] border border-[color:var(--border)] bg-[linear-gradient(135deg,rgba(47,107,255,0.08),rgba(255,255,255,0.6))] p-10"
+          className="rounded-3xl border border-[color:var(--border)] bg-[linear-gradient(135deg,rgba(47,107,255,0.12),rgba(255,255,255,0.7))] p-10 shadow-[0_28px_70px_-45px_rgba(15,23,42,0.25)] backdrop-blur"
           variants={fadeUp}
         >
           <h2 className="text-3xl font-semibold">Обсудим ваш проект?</h2>
@@ -647,13 +626,13 @@ export function FinalCTA() {
           <div className="mt-6 flex flex-wrap gap-3">
             <a
               href="mailto:hello@dsg.studio"
-              className="rounded-full bg-[color:var(--accent)] px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+              className="rounded-full bg-[color:var(--accent)] px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_-18px_rgba(47,107,255,0.8)] transition hover:-translate-y-0.5"
             >
               Оставить заявку
             </a>
             <a
               href="https://t.me/dsgstudio"
-              className="rounded-full border border-[color:var(--border)] px-6 py-3 text-sm font-semibold text-[color:var(--text)] transition hover:-translate-y-0.5 hover:border-[color:var(--text)]"
+              className="rounded-full border border-[color:var(--border)] bg-white/70 px-6 py-3 text-sm font-semibold text-[color:var(--text)] transition hover:-translate-y-0.5 hover:border-[color:var(--text)]"
             >
               Написать в Telegram
             </a>
@@ -666,7 +645,7 @@ export function FinalCTA() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-[color:var(--border)] py-10">
+    <footer className="section-shell py-12">
       <div className={`${containerClass} grid gap-6 md:grid-cols-3`}>
         <div>
           <p className="text-sm font-semibold">DSG studio</p>

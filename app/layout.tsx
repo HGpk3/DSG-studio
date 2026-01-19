@@ -16,6 +16,9 @@ export default function RootLayout({
   return (
     <html lang="ru" className="scroll-smooth">
       <body className={`${inter.className} bg-[color:var(--bg)] text-[color:var(--text)]`}>
+        <div className="bg-site" aria-hidden="true" />
+        <div className="bg-grid" aria-hidden="true" />
+        <div className="bg-noise" aria-hidden="true" />
         {children}
       </body>
     </html>
