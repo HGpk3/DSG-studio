@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { fadeUp, staggerContainer, staggerItem } from "./motion";
+import { AnimatePresence, m } from "framer-motion";
+import { Reveal, RevealItem } from "./framer-motion";
 
 const navItems = [
   { id: "services", label: "Услуги" },
@@ -14,20 +14,12 @@ const navItems = [
 
 const containerClass = "mx-auto w-full max-w-6xl px-6";
 const cardClass =
-  "rounded-[22px] border border-[color:var(--card-border)] bg-[color:var(--card-bg)] shadow-[var(--shadow-soft)] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-hover)]";
+  "rounded-[22px] border border-[color:var(--card-border)] bg-[color:var(--card-bg)] shadow-[var(--shadow-soft)] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[color:var(--accent)]/30 hover:shadow-[var(--shadow-hover)]";
 const cardMuted =
   "rounded-[22px] border border-[color:var(--card-border)] bg-[color:var(--surface)] shadow-[var(--shadow-soft)] backdrop-blur";
 
 export function Header() {
   const [activeSection, setActiveSection] = useState("services");
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     const sections = navItems
@@ -52,11 +44,7 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b bg-white/60 backdrop-blur-xl transition duration-300 ${
-        isScrolled
-          ? "border-slate-200/80 bg-white/80 shadow-[0_12px_30px_-24px_rgba(15,23,42,0.35)]"
-          : "border-transparent"
-      }`}
+      className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/70 backdrop-blur-xl transition duration-300"
     >
       <div
         className={`${containerClass} flex h-16 items-center justify-between gap-6`}
@@ -72,7 +60,7 @@ export function Header() {
               className={`relative text-sm transition ${
                 activeSection === item.id
                   ? "text-[color:var(--text)]"
-                  : "text-[color:var(--muted)] hover:text-[color:var(--text)]"
+                  : "text-[color:var(--muted)] hover:text-[color:var(--accent)]"
               } after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-[linear-gradient(90deg,var(--accent),var(--accent-2))] after:transition-transform hover:after:scale-x-100`}
               aria-current={activeSection === item.id ? "page" : undefined}
             >
@@ -98,47 +86,43 @@ export function Hero() {
       className="relative overflow-hidden border-b border-[color:var(--border)] pb-24 pt-20"
     >
       <div className="absolute inset-0 -z-10">
-        <div className="absolute -top-32 right-8 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(47,107,255,0.22)_0%,rgba(47,107,255,0)_65%)] blur-3xl" />
-        <div className="absolute bottom-0 left-10 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.18)_0%,rgba(139,92,246,0)_65%)] blur-3xl" />
+        <div className="absolute -top-32 right-6 h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle,rgba(47,107,255,0.28)_0%,rgba(47,107,255,0)_65%)] blur-3xl" />
+        <div className="absolute bottom-0 left-10 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.22)_0%,rgba(139,92,246,0)_65%)] blur-3xl" />
       </div>
-      <motion.div
-        className={`${containerClass} grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center`}
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.25 }}
-      >
-        <motion.div className="lg:col-span-7" variants={staggerContainer}>
-          <motion.span
+      <Reveal className={`${containerClass} grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center`} staggerChildren>
+        <div className="lg:col-span-7">
+          <RevealItem>
+            <span
             className="inline-flex items-center rounded-full border border-slate-200/70 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500"
-            variants={fadeUp}
-          >
-            DSG studio
-          </motion.span>
-          <motion.h1
-            className="mt-5 text-4xl font-semibold leading-tight text-[color:var(--text)] sm:text-5xl lg:text-[64px]"
-            variants={fadeUp}
-          >
-            Разработка сайтов
-            <br />
-            для{" "}
-            <span className="bg-[linear-gradient(120deg,var(--accent),var(--accent-2))] bg-clip-text text-transparent">
-              бизнеса
-            </span>{" "}
-            и продуктов
-          </motion.h1>
-          <motion.p
-            className="mt-5 max-w-xl text-lg leading-relaxed text-[color:var(--muted)]"
-            variants={fadeUp}
-          >
-            Проектируем, дизайн-им и разрабатываем современные веб-решения. Фокус
-            на скорости, конверсии и удобстве поддержки.
-          </motion.p>
-          <motion.div
-            className="mt-8 flex flex-wrap items-center gap-3"
-            variants={fadeUp}
-          >
-            <a
+            >
+              DSG studio
+            </span>
+          </RevealItem>
+          <RevealItem>
+            <h1 className="mt-5 text-4xl font-semibold leading-tight text-[color:var(--text)] sm:text-5xl lg:text-[64px]">
+              Разработка сайтов
+              <br />
+              для{" "}
+              <span className="bg-[linear-gradient(120deg,var(--accent),var(--accent-2))] bg-clip-text text-transparent">
+                бизнеса
+              </span>{" "}
+              и продуктов
+            </h1>
+          </RevealItem>
+          <RevealItem>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-[color:var(--muted)]">
+              Проектируем, дизайн-им и разрабатываем современные веб-решения. Фокус
+              на скорости, конверсии и удобстве поддержки.
+            </p>
+          </RevealItem>
+          <RevealItem>
+            <span className="mt-3 inline-flex text-sm font-medium text-[color:var(--muted)]">
+              <span className="typewriter">Сайты. Продукты. Интеграции.</span>
+            </span>
+          </RevealItem>
+          <RevealItem>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a
               href="#contacts"
               className="rounded-[16px] bg-[linear-gradient(120deg,var(--accent),var(--accent-2))] px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_40px_-24px_rgba(47,107,255,0.6)] transition hover:-translate-y-0.5"
             >
@@ -150,31 +134,32 @@ export function Hero() {
             >
               Смотреть кейсы
             </a>
-          </motion.div>
-          <motion.div
-            className="mt-6 flex flex-wrap gap-3 text-xs font-medium text-[color:var(--muted)]"
-            variants={fadeUp}
-          >
-            {[
-              "Next.js",
-              "UI/UX",
-              "SEO-ready",
-              "Аналитика",
-              "Поддержка",
-            ].map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-slate-200/70 bg-white/70 px-3 py-1"
-              >
-                {item}
-              </span>
-            ))}
-          </motion.div>
-        </motion.div>
-        <motion.div className="relative lg:col-span-5" variants={fadeUp}>
-          <div className="absolute -left-6 top-6 -z-10 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(47,107,255,0.35)_0%,transparent_70%)] blur-3xl" />
-          <div className="absolute -bottom-10 right-0 -z-10 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.32)_0%,transparent_70%)] blur-3xl" />
-          <div className="relative rounded-[28px] border border-slate-200/70 bg-white/75 p-6 shadow-[var(--shadow-soft)] backdrop-blur before:absolute before:inset-0 before:rounded-[28px] before:shadow-[0_0_0_1px_rgba(47,107,255,0.18)] before:content-['']">
+            </div>
+          </RevealItem>
+          <RevealItem>
+            <div className="mt-6 flex flex-wrap gap-3 text-xs font-medium text-[color:var(--muted)]">
+              {[
+                "Next.js",
+                "UI/UX",
+                "SEO-ready",
+                "Аналитика",
+                "Поддержка",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-slate-200/70 bg-white/70 px-3 py-1"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </RevealItem>
+        </div>
+        <RevealItem className="relative lg:col-span-5">
+          <div className="absolute -left-10 top-6 -z-10 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(47,107,255,0.4)_0%,transparent_70%)] blur-3xl" />
+          <div className="absolute -bottom-12 right-0 -z-10 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.34)_0%,transparent_70%)] blur-3xl" />
+          <div className="absolute -right-20 top-1/2 -z-20 h-[460px] w-[460px] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(47,107,255,0.22)_0%,transparent_70%)] blur-[140px]" />
+          <div className="relative rounded-[28px] border border-slate-200/70 bg-white/75 p-6 shadow-[var(--shadow-soft)] backdrop-blur before:absolute before:inset-0 before:rounded-[28px] before:shadow-[0_0_0_1px_rgba(47,107,255,0.2)] before:content-['']">
             <div className="relative flex items-center justify-between text-xs font-semibold text-[color:var(--muted)]">
               <span>Product panel</span>
               <span className="rounded-full bg-[color:var(--accent)]/10 px-2 py-1 text-[10px] text-[color:var(--accent)]">
@@ -190,7 +175,7 @@ export function Hero() {
                 ].map((card) => (
                   <div
                     key={card.title}
-                    className="rounded-2xl border border-slate-200/70 bg-white/80 p-3 text-sm shadow-[0_12px_24px_-20px_rgba(15,23,42,0.25)]"
+                    className="rounded-2xl border border-slate-200/70 bg-white/80 p-3 text-sm shadow-[0_10px_22px_-18px_rgba(15,23,42,0.2)]"
                   >
                     <p className="text-xs text-[color:var(--muted)]">
                       {card.title}
@@ -227,8 +212,8 @@ export function Hero() {
               </div>
             </div>
           </div>
-        </motion.div>
-      </motion.div>
+        </RevealItem>
+      </Reveal>
     </section>
   );
 }
@@ -254,30 +239,23 @@ export function StatsStrip() {
   ];
 
   return (
-    <motion.section
-      className="relative border-b border-[color:var(--border)] bg-slate-50/70 py-10"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.25 }}
-    >
+    <section className="relative border-b border-[color:var(--border)] bg-slate-50/70 py-10">
       <div className="absolute inset-y-0 left-0 w-px bg-[linear-gradient(180deg,transparent,rgba(47,107,255,0.35),transparent)]" />
       <div className="absolute inset-y-0 right-0 w-px bg-[linear-gradient(180deg,transparent,rgba(139,92,246,0.35),transparent)]" />
-      <div className={`${containerClass} grid gap-4 sm:grid-cols-2 lg:grid-cols-4`}>
+      <Reveal className={`${containerClass} grid gap-4 sm:grid-cols-2 lg:grid-cols-4`} staggerChildren>
         {items.map((item) => (
-          <motion.div
+          <RevealItem
             key={item.title}
             className="rounded-2xl border border-slate-200/70 bg-white/70 px-4 py-3 text-left shadow-[0_16px_32px_-28px_rgba(15,23,42,0.2)]"
-            variants={staggerItem}
           >
             <p className="text-sm font-semibold text-[color:var(--text)]">
               {item.title}
             </p>
             <p className="text-xs text-[color:var(--muted)]">{item.desc}</p>
-          </motion.div>
+          </RevealItem>
         ))}
-      </div>
-    </motion.section>
+      </Reveal>
+    </section>
   );
 }
 
@@ -286,60 +264,56 @@ export function Services() {
     {
       title: "Проектирование",
       desc: "Аналитика, структура, UX-прототип",
+      details: ["UX прототип", "контент-план"],
     },
     {
       title: "Дизайн",
       desc: "UI/UX, адаптив, дизайн-система",
+      details: ["дизайн-система", "mobile-first"],
     },
     {
       title: "Разработка",
       desc: "Next.js, интеграции, CMS",
+      details: ["интеграции", "CMS-ready"],
     },
     {
       title: "Поддержка",
       desc: "Развитие, аналитика, A/B гипотезы",
+      details: ["A/B гипотезы", "аналитика"],
     },
   ];
 
   return (
-    <motion.section
+    <section
       id="services"
       className="relative border-b border-[color:var(--border)] bg-slate-50/70 py-24"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.25 }}
     >
       <div className="absolute -right-24 top-10 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(47,107,255,0.18)_0%,transparent_70%)] blur-3xl" />
       <div className={containerClass}>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <motion.h2 className="text-3xl font-semibold" variants={fadeUp}>
-              Услуги
-            </motion.h2>
-            <motion.p
-              className="mt-3 text-base text-[color:var(--muted)]"
-              variants={fadeUp}
-            >
-              Полный цикл — от структуры до запуска и развития.
-            </motion.p>
+            <Reveal>
+              <RevealItem>
+                <h2 className="text-3xl font-semibold">Услуги</h2>
+              </RevealItem>
+              <RevealItem>
+                <p className="mt-3 text-base text-[color:var(--muted)]">
+                  Полный цикл — от структуры до запуска и развития.
+                </p>
+              </RevealItem>
+            </Reveal>
           </div>
-          <motion.p
-            className="text-sm font-medium text-[color:var(--muted)]"
-            variants={fadeUp}
-          >
-            Под ключ · Поэтапно · Поддержка
-          </motion.p>
+          <Reveal>
+            <RevealItem className="text-sm font-medium text-[color:var(--muted)]">
+              Под ключ · Поэтапно · Поддержка
+            </RevealItem>
+          </Reveal>
         </div>
-        <motion.div
-          className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4"
-          variants={staggerContainer}
-        >
+        <Reveal className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4" staggerChildren>
           {services.map((service) => (
-            <motion.div
+            <RevealItem
               key={service.title}
               className={`group cursor-pointer p-6 ${cardClass}`}
-              variants={staggerItem}
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[linear-gradient(120deg,rgba(47,107,255,0.25),rgba(139,92,246,0.25))] text-[color:var(--accent)] shadow-[0_10px_20px_-16px_rgba(47,107,255,0.5)]">
                 <span className="text-lg">◉</span>
@@ -350,14 +324,24 @@ export function Services() {
               <p className="mt-2 text-sm text-[color:var(--muted)]">
                 {service.desc}
               </p>
-              <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--accent)] transition group-hover:underline">
+              <div className="mt-3 flex flex-wrap gap-2 text-xs text-[color:var(--muted)]">
+                {service.details.map((detail) => (
+                  <span
+                    key={detail}
+                    className="rounded-full border border-slate-200/70 bg-white/80 px-2 py-1"
+                  >
+                    {detail}
+                  </span>
+                ))}
+              </div>
+              <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--accent)] transition group-hover:text-[color:var(--accent-2)] group-hover:underline">
                 Подробнее →
               </span>
-            </motion.div>
+            </RevealItem>
           ))}
-        </motion.div>
+        </Reveal>
       </div>
-    </motion.section>
+    </section>
   );
 }
 
@@ -367,51 +351,51 @@ export function Cases() {
       title: "Fintech-платформа",
       type: "Корпоративный сайт",
       metrics: ["Скорость 98", "Конверсия +18%"],
+      badge: "Корп. сайт",
     },
     {
       title: "SaaS-сервис",
       type: "Лендинг + продуктовые страницы",
       metrics: ["Lighthouse 96", "Заявки +22%"],
+      badge: "SaaS",
     },
     {
       title: "Проект под NDA",
       type: "Проекты в разработке",
       metrics: ["NDA", "Запросить примеры"],
+      badge: "Лендинг",
     },
   ];
 
   return (
-    <motion.section
+    <section
       id="cases"
       className="border-b border-[color:var(--border)] bg-white/70 py-24"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.25 }}
     >
       <div className={containerClass}>
-        <motion.h2 className="text-3xl font-semibold" variants={fadeUp}>
-          Кейсы
-        </motion.h2>
-        <motion.p
-          className="mt-3 text-base text-[color:var(--muted)]"
-          variants={fadeUp}
-        >
-          Показываем результат, а не только дизайн.
-        </motion.p>
-        <motion.div
-          className="mt-10 grid gap-6 lg:grid-cols-3"
-          variants={staggerContainer}
-        >
+        <Reveal>
+          <RevealItem>
+            <h2 className="text-3xl font-semibold">Кейсы</h2>
+          </RevealItem>
+          <RevealItem>
+            <p className="mt-3 text-base text-[color:var(--muted)]">
+              Показываем результат, а не только дизайн.
+            </p>
+          </RevealItem>
+        </Reveal>
+        <Reveal className="mt-10 grid gap-6 lg:grid-cols-3" staggerChildren>
           {cases.map((item) => (
-            <motion.div
+            <RevealItem
               key={item.title}
               className={`group cursor-pointer overflow-hidden ${cardClass}`}
-              variants={staggerItem}
             >
               <div className="relative h-44 overflow-hidden bg-[linear-gradient(135deg,rgba(47,107,255,0.18),rgba(139,92,246,0.12))]">
                 <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "linear-gradient(rgba(15,23,42,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.12) 1px, transparent 1px)", backgroundSize: "36px 36px" }} />
                 <div className="absolute -right-6 top-6 h-20 w-20 rounded-full bg-[radial-gradient(circle,rgba(47,107,255,0.5)_0%,transparent_70%)] blur-2xl" />
+                <div className="absolute bottom-6 left-8 h-10 w-10 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.45)_0%,transparent_70%)] blur-xl" />
+                <div className="absolute left-4 top-4 rounded-full border border-white/60 bg-white/70 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-600">
+                  {item.badge}
+                </div>
                 <div className="relative flex h-full items-center justify-center text-xs font-semibold uppercase tracking-widest text-slate-600 transition-transform duration-300 group-hover:scale-[1.02]">
                   Case preview
                 </div>
@@ -438,15 +422,15 @@ export function Cases() {
                     </span>
                   ))}
                 </div>
-                <button className="text-sm font-semibold text-[color:var(--accent)] transition group-hover:underline">
+                <button className="text-sm font-semibold text-[color:var(--accent)] transition group-hover:text-[color:var(--accent-2)] group-hover:underline">
                   Смотреть кейс
                 </button>
               </div>
-            </motion.div>
+            </RevealItem>
           ))}
-        </motion.div>
+        </Reveal>
       </div>
-    </motion.section>
+    </section>
   );
 }
 
@@ -461,40 +445,34 @@ export function Process() {
   ];
 
   return (
-    <motion.section
+    <section
       id="process"
       className="border-b border-[color:var(--border)] bg-slate-50/70 py-24"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.25 }}
     >
       <div className={containerClass}>
-        <motion.h2 className="text-3xl font-semibold" variants={fadeUp}>
-          Процесс
-        </motion.h2>
-        <motion.p
-          className="mt-3 text-base text-[color:var(--muted)]"
-          variants={fadeUp}
-        >
-          Четкая последовательность шагов и прозрачные сроки.
-        </motion.p>
-        <motion.div
-          className="mt-10 grid gap-4"
-          variants={staggerContainer}
-        >
+        <Reveal>
+          <RevealItem>
+            <h2 className="text-3xl font-semibold">Процесс</h2>
+          </RevealItem>
+          <RevealItem>
+            <p className="mt-3 text-base text-[color:var(--muted)]">
+              Четкая последовательность шагов и прозрачные сроки.
+            </p>
+          </RevealItem>
+        </Reveal>
+        <Reveal className="mt-10 grid gap-4" staggerChildren>
           {steps.map((step, index) => (
-            <motion.div
+            <RevealItem
               key={step.title}
-              className={`relative flex flex-wrap items-center justify-between gap-4 p-5 ${cardClass} ${
+              className={`group relative flex flex-wrap items-center justify-between gap-4 p-5 ${cardClass} ${
                 index < steps.length - 1
                   ? "after:absolute after:left-10 after:top-full after:h-6 after:w-px after:bg-slate-200/80"
                   : ""
               }`}
-              variants={staggerItem}
             >
+              <div className="pointer-events-none absolute inset-y-2 right-2 w-20 rounded-full bg-[linear-gradient(120deg,rgba(47,107,255,0.12),rgba(139,92,246,0.12))] opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100" />
               <div className="flex items-center gap-4">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/70 bg-white/80 text-sm font-semibold text-[color:var(--accent)]">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/70 bg-white/80 text-sm font-semibold text-[color:var(--accent)] transition group-hover:border-[color:var(--accent)]/40 group-hover:bg-[color:var(--accent)]/10">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <p className="text-base font-semibold">{step.title}</p>
@@ -502,11 +480,11 @@ export function Process() {
               <p className="text-sm text-[color:var(--muted)]">
                 {step.time}
               </p>
-            </motion.div>
+            </RevealItem>
           ))}
-        </motion.div>
+        </Reveal>
       </div>
-    </motion.section>
+    </section>
   );
 }
 
@@ -521,16 +499,12 @@ export function TechApproach() {
   ];
 
   return (
-    <motion.section
+    <section
       id="about"
       className="border-b border-[color:var(--border)] py-24"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.25 }}
     >
-      <div className={`${containerClass} grid gap-10 lg:grid-cols-2`}>
-        <motion.div variants={fadeUp}>
+      <Reveal className={`${containerClass} grid gap-10 lg:grid-cols-2`} staggerChildren>
+        <RevealItem>
           <h2 className="text-3xl font-semibold">Технологии и подход</h2>
           <p className="mt-4 text-base text-[color:var(--muted)]">
             Next.js, TypeScript, Tailwind, Headless CMS (по запросу),
@@ -557,8 +531,8 @@ export function TechApproach() {
               </span>
             ))}
           </div>
-        </motion.div>
-        <motion.div variants={fadeUp}>
+        </RevealItem>
+        <RevealItem>
           <div className="rounded-[24px] border border-slate-200/70 bg-white/75 p-6 shadow-[var(--shadow-soft)] backdrop-blur">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-lg font-semibold">Что вы получаете</h3>
@@ -578,9 +552,9 @@ export function TechApproach() {
               ))}
             </ul>
           </div>
-        </motion.div>
-      </div>
-    </motion.section>
+        </RevealItem>
+      </Reveal>
+    </section>
   );
 }
 
@@ -623,32 +597,26 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <motion.section
+    <section
       className="border-b border-[color:var(--border)] bg-white/70 py-24"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.25 }}
     >
       <div className={containerClass}>
-        <motion.h2 className="text-3xl font-semibold" variants={fadeUp}>
-          FAQ
-        </motion.h2>
-        <motion.div
-          className="mt-8 space-y-3"
-          variants={staggerContainer}
-        >
+        <Reveal>
+          <RevealItem>
+            <h2 className="text-3xl font-semibold">FAQ</h2>
+          </RevealItem>
+        </Reveal>
+        <Reveal className="mt-8 space-y-3" staggerChildren>
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
-              <motion.div
+              <RevealItem
                 key={faq.question}
                 className={`rounded-[22px] border bg-white/80 transition-colors ${
                   isOpen
                     ? "border-[color:var(--accent)]/30 bg-slate-50/80 shadow-[var(--shadow-soft)]"
                     : "border-slate-200/70"
                 }`}
-                variants={staggerItem}
               >
                 <button
                   type="button"
@@ -666,44 +634,37 @@ export function FAQ() {
                 </button>
                 <AnimatePresence initial={false}>
                   {isOpen && (
-                    <motion.div
+                    <m.div
                       key="content"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="overflow-hidden"
                     >
                       <div className="px-6 pb-5 text-sm text-[color:var(--muted)]">
                         {faq.answer}
                       </div>
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </RevealItem>
             );
           })}
-        </motion.div>
+        </Reveal>
       </div>
-    </motion.section>
+    </section>
   );
 }
 
 export function FinalCTA() {
   return (
-    <motion.section
+    <section
       id="contacts"
       className="border-b border-[color:var(--border)] bg-slate-50/70 py-24"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.25 }}
     >
       <div className={containerClass}>
-        <motion.div
-          className="relative overflow-hidden rounded-[28px] border border-slate-200/70 bg-white/80 p-10 shadow-[var(--shadow-soft)] backdrop-blur"
-          variants={fadeUp}
-        >
+        <Reveal>
+          <RevealItem className="relative overflow-hidden rounded-[28px] border border-slate-200/70 bg-white/80 p-10 shadow-[var(--shadow-soft)] backdrop-blur">
           <div className="absolute -right-12 top-0 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(47,107,255,0.3)_0%,transparent_70%)] blur-3xl" />
           <div className="absolute bottom-0 left-12 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.25)_0%,transparent_70%)] blur-3xl" />
           <h2 className="text-3xl font-semibold">Обсудим ваш проект?</h2>
@@ -724,9 +685,10 @@ export function FinalCTA() {
               Написать в Telegram
             </a>
           </div>
-        </motion.div>
+          </RevealItem>
+        </Reveal>
       </div>
-    </motion.section>
+    </section>
   );
 }
 
